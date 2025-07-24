@@ -23,7 +23,7 @@ class SenecWebGrabber:
         #SENEC API
         self._SENEC_USERNAME = self._options['SENEC_USERNAME']
         self._SENEC_PASSWORD = self._options['SENEC_PASSWORD']
-        self._SENEC_AUTH_URL = "https://mein-senec.de/auth/login"
+        self._SENEC_AUTH_URL = "https://mein-senec.de/endkunde/oauth2/authorization/endkunde-portal"
         self._SENEC_API_OVERVIEW_URL = "https://mein-senec.de/endkunde/api/status/getstatusoverview.php?anlageNummer=0"
         self._SENEC_API_URL_START="https://mein-senec.de/endkunde/api/status/getstatus.php?type="
         self._SENEC_API_URL_END="&period=all&anlageNummer=0"
@@ -69,6 +69,35 @@ class SenecWebGrabber:
             self.isAuthenticated=True
         else:
             logger.info("Login failed with Code " + str(r.status_code))
+
+    def authenticate(self) -> None:
+        # First we start with the OAuth2 URL of mein-senec.de:
+        r = self._session.get(self._SENEC_AUTH_URL, timeout=10)
+        if r.status_code != 200:
+            logger.info("Failed to load OAUTH2 URL: " + str(r.status_code))
+        else:
+            # We've been redirected to the login page on sso.senec.com.
+            # Now we need to find the URL the login form uses:
+            
+            # The form has the id "kc-form-login", so lets jump to that:
+            sFormPostURL = r.text[r.text.find('kc-form-login'):]
+            
+            # Then cut everything away until the actual post URL starts:
+            sFormPostURL = sFormPostURL[sFormPostURL.find('action="')+8:]
+            
+            # And cut away everything after the post URL:
+            sFormPostURL = sFormPostURL[:sFormPostURL.find('" method=')]
+            
+            auth_payload = {
+                "username" : self._SENEC_USERNAME,
+                "password" : self._SENEC_PASSWORD
+            }
+            r = self._session.post(sFormPostURL, auth_payload, timeout=10)
+            if r.status_code == 200:
+                logger.info("Login successful")
+                self.isAuthenticated=True
+            else:
+                logger.info("Login failed with Code " + str(r.status_code))
     
 
 
@@ -100,7 +129,7 @@ class SenecWebGrabber:
         logger.debug("***** update_now_kW_stats(self) ********")
         
         #grab NOW and TODAY stats
-        r=self._session.get(self._SENEC_API_OVERVIEW_URL)
+        r=self._session.get(self._SENEC_API_OVERVIEW_URL, timeout=10)
         
         if r.status_code==200:
             r_json = json.loads(r.text)
@@ -133,7 +162,7 @@ class SenecWebGrabber:
         #grab TOTAL stats
         for key in self._API_KEYS:
             api_url = self._SENEC_API_URL_START + key + self._SENEC_API_URL_END
-            r=self._session.get(api_url)
+            r=self._session.get(api_url, timeout=10)
             if r.status_code==200:
                 r_json = json.loads(r.text)
                 value = r_json["fullkwh"]
