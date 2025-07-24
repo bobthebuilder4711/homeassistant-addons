@@ -8,10 +8,11 @@ This repository is a collection of custom created addons für homeassistant.
 
 If you want to use addons from this repository, you must perform the following steps:
 
-1. Navigate in your Home Assistant frontend to **Supervisor** -> **Add-on Store**.
-2. Click the Context Menu in the top right and select **Repositories**
-3. Add `https://github.com/bobthebuilder4711/homeassistant-addons` and click **Add**
-4. The new repository should now be added to the list above.
+1. Navigate in your Home Assistant frontend to **Settings** -> **Add-ons**.
+2. Click the **Add-on Store** button in the bottom right
+3. Click the Context Menu in the top right and select **Repositories**
+4. Add `https://github.com/bobthebuilder4711/homeassistant-addons` and click **Add**
+5. The new repository should now be added to the list above.
 
 ## List of Addons
 
