@@ -1,6 +1,6 @@
 name: "Senec Web2MQTT"
 description: "Reads data from mein-senec.de and publishes it as MQTT sensor data to home assistant"
-version: "1.0.1"
+version: "1.1.1"
 slug: "senecweb2mqtt"
 init: false
 arch:
