@@ -59,18 +59,6 @@ class SenecWebGrabber:
         return options
 
     def authenticate(self) -> None:
-        auth_payload = {
-            "username" : self._SENEC_USERNAME,
-            "password" : self._SENEC_PASSWORD
-        }
-        r = self._session.post(self._SENEC_AUTH_URL, auth_payload)
-        if r.status_code == 200:
-            logger.info("Login to Senec Website successful")
-            self.isAuthenticated=True
-        else:
-            logger.info("Login failed with Code " + str(r.status_code))
-
-    def authenticate(self) -> None:
         # First we start with the OAuth2 URL of mein-senec.de:
         r = self._session.get(self._SENEC_AUTH_URL, timeout=10)
         if r.status_code != 200:
