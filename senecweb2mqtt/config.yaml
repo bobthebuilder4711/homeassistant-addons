@@ -12,6 +12,7 @@ arch:
 options:
   SENEC_USERNAME: null
   SENEC_PASSWORD: null
+  SENEC_ANLAGENUMMER: 0
   MQTT_USERNAME: null
   MQTT_PASSWORD: null
   MQTT_HOST: "core-mosquitto"
@@ -26,6 +27,7 @@ options:
 schema:
   SENEC_USERNAME: email
   SENEC_PASSWORD: password
+  SENEC_ANLAGENUMMER: int
   MQTT_USERNAME: password
   MQTT_PASSWORD: password
   MQTT_HOST: str

@@ -24,9 +24,9 @@ class SenecWebGrabber:
         self._SENEC_USERNAME = self._options['SENEC_USERNAME']
         self._SENEC_PASSWORD = self._options['SENEC_PASSWORD']
         self._SENEC_AUTH_URL = "https://mein-senec.de/endkunde/oauth2/authorization/endkunde-portal"
-        self._SENEC_API_OVERVIEW_URL = "https://mein-senec.de/endkunde/api/status/getstatusoverview.php?anlageNummer=0"
+        self._SENEC_API_OVERVIEW_URL = "https://mein-senec.de/endkunde/api/status/getstatusoverview.php?anlageNummer=" + str(self._options['SENEC_ANLAGENUMMER'])
         self._SENEC_API_URL_START="https://mein-senec.de/endkunde/api/status/getstatus.php?type="
-        self._SENEC_API_URL_END="&period=all&anlageNummer=0"
+        self._SENEC_API_URL_END="&period=all&anlageNummer=" + str(self._options['SENEC_ANLAGENUMMER'])
         
         #can be used in all api calls, names come from senec website
         self._API_KEYS = [
