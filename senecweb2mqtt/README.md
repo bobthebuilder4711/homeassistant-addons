@@ -15,6 +15,9 @@ The configuration is done in the configuration tab of the addon. All available o
 SENEC_USERNAME='mail@example.com'
 SENEC_PASSWORD='supersafepassword'
 
+# Number of the unit you want to fetch data for. Default is unit 0.
+SENEC_ANLAGENUMMER='0'
+
 # MQTT parameters for connection with broker
 MQTT_USERNAME='exampleuser'
 MQTT_PASSWORD='anotherpassword'
